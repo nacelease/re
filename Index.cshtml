@@ -1,10 +1,32 @@
-﻿@page
-@model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using te.Data;
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-   
-</div>
+namespace te.Pages.stude
+{
+    public class IndexModel : PageModel
+    {
+        private readonly te.Data.ApplicationDbContext _context;
+
+        public IndexModel(te.Data.ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public IList<student> student { get;set; }
+
+        public async Task OnGetAsync()
+        {
+            var stu = from m in _context.student select m;
+            stu = stu.Where(predicate: s => s.teacher.contains("aabb"));
+            
+
+
+        }
+    }
+}
